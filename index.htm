@@ -7,15 +7,15 @@
 				 font-family: sans-serif;
 			}
 			h1 {
-
+				color: #FFFFFF;
 			}
 			h2 {
 
 			}
-			div {
-				height: 2em;
+			p {
+				/*height: 2em;*/
 				color: #FFFFFF;
-				font-size: 0.8em;
+				/*font-size: 0.8em;*/
 			}
 			a {
 				font-weight:bold;
@@ -24,6 +24,10 @@
 			}
 			a:hover, a:active {
 				color:#003652;
+			}
+			canvas {
+			  outline: none;
+			  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
 			}
 		</style>
 		<script type="text/javascript">
@@ -40,9 +44,10 @@
 	</head>
 	<body>
 		<script src="js/processing-1.2.3.min.js"></script>
-		<div>drag the input vectors to view the corresponding positive, negative and zero sequence components.</div>
-		<div>select "Example" to set the vectors to match the example <a href="http://www.intranet.eee.manchester.ac.uk/intranet/ug/coursematerial/2nd%20Year/EEEN20028%20-%20Electrical%20Power/Symmetrical%20comp%20introduction_PAC07.pdf">here [PDF]</a></div>
-		<div>uses <a href="http://processingjs.org/">processing.js</a> - requires an HTML5 browser. the source code is <a href="https://github.com/stevenblair/seq">here</a></div>
+		<h1>Visualisation of sequence components</h1>
+		<p>Drag the input vectors to view the corresponding positive, negative, and zero sequence components. Select "example" to set the vectors to match the example <a href="http://www.intranet.eee.manchester.ac.uk/intranet/ug/coursematerial/2nd%20Year/EEEN20028%20-%20Electrical%20Power/Symmetrical%20comp%20introduction_PAC07.pdf">here [PDF]</a>.</p>
+		<p>This uses <a href="http://processingjs.org/">processing.js</a> and requires an HTML5 browser. It does not work in Internet Explorer. The source code is <a href="https://github.com/stevenblair/seq">here</a>.</p>
+		<p><a href="http://personal.strath.ac.uk/steven.m.blair/">Return to main page</a>.</p>
 		<canvas datasrc="seq.pde" width="1200" height="450"></canvas>
 	</body>
 </html>

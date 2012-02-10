@@ -26,11 +26,11 @@
 
 PFont font;
 final float MOUSE_OVER_LINE_DISTANCE_THRESHOLD = 3.0;
-final int STROKE_WEIGHT_NORMAL = 6, STROKE_WEIGHT_POS = 4, STROKE_WEIGHT_NEG = 3, STROKE_WEIGHT_ZERO = 2, STROKE_WEIGHT_HOVER = 11;
+final int STROKE_WEIGHT_NORMAL = 8, STROKE_WEIGHT_POS = 6, STROKE_WEIGHT_NEG = 5, STROKE_WEIGHT_ZERO = 3, STROKE_WEIGHT_HOVER = 12;
 final int SET_BALANCED = 0, SET_EXAMPLE = 1, SET_RANDOM = 2, TOGGLE_MODE = 3;  // workaround for lack of pseudo-anonymous functions in .js
-final float X_START = 250;
-final float Y_START = 300;
-final float X_MAX = 1300;
+final float X_START = 180;
+final float Y_START = 350;
+final float X_MAX = 1200;
 final float Y_MAX = 600;
 final int VIEW_TOGETHER = 0, VIEW_SEPERATE = 1;
 final color redPhaseA = color(180, 33, 38);      // RGB values
@@ -40,7 +40,7 @@ final color colorPhaseMap[] = {
   redPhaseA, yellowPhaseB, bluePhaseC
 };
 final color alphaValueMap[] = {
-  200, 120, 80, 40
+  200, 120, 80, 60
 };
 final int strokeWeightMap[] = {
   STROKE_WEIGHT_NORMAL, STROKE_WEIGHT_POS, STROKE_WEIGHT_NEG, STROKE_WEIGHT_ZERO, STROKE_WEIGHT_HOVER
@@ -74,10 +74,10 @@ void initVariables() {
 }
 
 void initGUI() {
-  buttonMode = new RectButton("toggle mode", 10, 10, 80, 15, TOGGLE_MODE);
-  buttonBalanced = new RectButton("balanced", 200, 10, 80, 15, SET_BALANCED);
-  buttonExample = new RectButton("example", 300, 10, 80, 15, SET_EXAMPLE);
-  buttonRandom = new RectButton("random", 400, 10, 80, 15, SET_RANDOM);
+  buttonMode = new RectButton("show superimposed", 10, 10, 160, 30, TOGGLE_MODE);
+  buttonBalanced = new RectButton("balanced", 10, 50, 160, 30, SET_BALANCED);
+  buttonExample = new RectButton("example", 10, 90, 160, 30, SET_EXAMPLE);
+  buttonRandom = new RectButton("random", 10, 130, 160, 30, SET_RANDOM);
 }
 
 PVector rotateAlpha(PVector pv) {
@@ -306,7 +306,7 @@ void setup() {
   //strokeWeight(2);
   font = createFont("SansSerif.plain", 12);
   textFont(font);
-  textSize(11);
+  textSize(12);
   textLeading(10);
   textAlign(CENTER);
   smooth();
@@ -347,6 +347,26 @@ void draw() {
     text("zero", X_START + 900, Y_START + 150);
   }
   else {
+    for (int seq = 0; seq < 4; seq++) {
+      if (seq == 0) {
+        text("input", 220 + 60 * seq, 80);
+      }
+      else if (seq == 1) {
+        text("positive", 220 + 60 * seq, 80);
+      }
+      else if (seq == 2) {
+        text("negative", 220 + 60 * seq, 80);
+      }
+      else if (seq == 3) {
+        text("zero", 220 + 60 * seq, 80);
+      }
+      for (int phase = 0; phase < 3; phase++) {
+        strokeWeight(strokeWeightMap[seq]);
+        stroke(colorPhaseMap[phase], alphaValueMap[seq]);
+        line(200 + 60 * seq, 10 + 20 * phase, 240 + 60 * seq, 10 + 20 * phase);
+      }
+    }
+
     drawPhasorsPerPhase(0, X_START, Y_START);
     drawPhasorsPerPhase(1, X_START, Y_START);
     drawPhasorsPerPhase(2, X_START, Y_START);
@@ -393,9 +413,11 @@ void setAction(int setNum) {
       case TOGGLE_MODE:
         if (mode == VIEW_SEPERATE) {
           mode = VIEW_TOGETHER;
+          buttonMode.string = "show seperate";
         }
         else {
-            mode = VIEW_SEPERATE;
+          mode = VIEW_SEPERATE;
+          buttonMode.string = "show superimposed";
         }
         break;
       default:
@@ -404,10 +426,10 @@ void setAction(int setNum) {
 }
 
 void updateButtons() {
+  buttonMode.display();
   buttonBalanced.display();
   buttonExample.display();
   buttonRandom.display();
-  buttonMode.display();
 }
 
 String cursorLock = "";
@@ -480,6 +502,10 @@ class RectButton {
     }
   }
 
+  String getString() {
+    return string;
+  }
+
   void display() {
     update();
     
@@ -488,7 +514,7 @@ class RectButton {
     fill(currentcolor);
     rect(x, y, sizeX, sizeY);
     fill(255);
-    text(string, x, y + 2, sizeX, sizeY);
+    text(this.getString(), x, y + 8, sizeX, sizeY);
   }
 }
 
