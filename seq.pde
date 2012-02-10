@@ -29,9 +29,11 @@ final float MOUSE_OVER_LINE_DISTANCE_THRESHOLD = 3.0;
 final int STROKE_WEIGHT_NORMAL = 8, STROKE_WEIGHT_POS = 6, STROKE_WEIGHT_NEG = 5, STROKE_WEIGHT_ZERO = 3, STROKE_WEIGHT_HOVER = 12;
 final int SET_BALANCED = 0, SET_EXAMPLE = 1, SET_RANDOM = 2, TOGGLE_MODE = 3;  // workaround for lack of pseudo-anonymous functions in .js
 final float X_START = 180;
-final float Y_START = 350;
+final float Y_START = 300;
 final float X_MAX = 1200;
 final float Y_MAX = 600;
+final int LEGEND_BASE_X = 20;
+final int LEGEND_BASE_Y = 60;
 final int VIEW_TOGETHER = 0, VIEW_SEPERATE = 1;
 final color redPhaseA = color(180, 33, 38);      // RGB values
 final color yellowPhaseB = color(222, 215, 20);
@@ -74,10 +76,10 @@ void initVariables() {
 }
 
 void initGUI() {
-  buttonMode = new RectButton("show superimposed", 10, 10, 160, 30, TOGGLE_MODE);
-  buttonBalanced = new RectButton("balanced", 10, 50, 160, 30, SET_BALANCED);
-  buttonExample = new RectButton("example", 10, 90, 160, 30, SET_EXAMPLE);
-  buttonRandom = new RectButton("random", 10, 130, 160, 30, SET_RANDOM);
+  buttonMode = new RectButton("show superimposed", 10, 10, 150, 30, TOGGLE_MODE);
+  buttonBalanced = new RectButton("balanced", 180, 10, 150, 30, SET_BALANCED);
+  buttonExample = new RectButton("example", 350, 10, 150, 30, SET_EXAMPLE);
+  buttonRandom = new RectButton("random", 520, 10, 150, 30, SET_RANDOM);
 }
 
 PVector rotateAlpha(PVector pv) {
@@ -325,7 +327,7 @@ void draw() {
   setVariables();
 
   // draw grid
-  stroke(15);
+  stroke(35);
   strokeWeight(1);
   line(0, Y_START, X_MAX, Y_START);
   line(X_START, 0, X_START, Y_MAX);
@@ -349,21 +351,21 @@ void draw() {
   else {
     for (int seq = 0; seq < 4; seq++) {
       if (seq == 0) {
-        text("input", 220 + 60 * seq, 80);
+        text("input", LEGEND_BASE_X + 20 + 60 * seq, LEGEND_BASE_Y + 60);
       }
       else if (seq == 1) {
-        text("positive", 220 + 60 * seq, 80);
+        text("positive", LEGEND_BASE_X + 20 + 60 * seq, LEGEND_BASE_Y + 60);
       }
       else if (seq == 2) {
-        text("negative", 220 + 60 * seq, 80);
+        text("negative", LEGEND_BASE_X + 20 + 60 * seq, LEGEND_BASE_Y + 60);
       }
       else if (seq == 3) {
-        text("zero", 220 + 60 * seq, 80);
+        text("zero", LEGEND_BASE_X + 20 + 60 * seq, LEGEND_BASE_Y + 60);
       }
       for (int phase = 0; phase < 3; phase++) {
         strokeWeight(strokeWeightMap[seq]);
         stroke(colorPhaseMap[phase], alphaValueMap[seq]);
-        line(200 + 60 * seq, 10 + 20 * phase, 240 + 60 * seq, 10 + 20 * phase);
+        line(LEGEND_BASE_X + 60 * seq, LEGEND_BASE_Y + 20 * phase, LEGEND_BASE_X + 40 + 60 * seq, LEGEND_BASE_Y + 20 * phase);
       }
     }
 
