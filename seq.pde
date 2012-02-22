@@ -415,7 +415,7 @@ void setAction(int setNum) {
       case TOGGLE_MODE:
         if (mode == VIEW_SEPERATE) {
           mode = VIEW_TOGETHER;
-          buttonMode.string = "show seperate";
+          buttonMode.string = "show separate";
         }
         else {
           mode = VIEW_SEPERATE;
