@@ -35,6 +35,7 @@ final float Y_MAX = 600;
 final int LEGEND_BASE_X = 20;
 final int LEGEND_BASE_Y = 60;
 final int VIEW_TOGETHER = 0, VIEW_SEPERATE = 1;
+final float VISIBLE_THRESHOLD = 0.3;
 final color redPhaseA = color(180, 33, 38);      // RGB values
 final color yellowPhaseB = color(222, 215, 20);
 final color bluePhaseC = color(36, 78, 198);
@@ -61,7 +62,7 @@ float magC = 0.0;
 float phaseA = 0.0;
 float phaseB = 0.0;
 float phaseC = 0.0;
-float scalePhasors = 20.0;
+float scalePhasors = 100.0;
 int hoveredPhase = -1;
 
 RectButton buttonBalanced, buttonExample, buttonRandom, buttonMode;
@@ -291,7 +292,7 @@ void drawPhase(PVector pv, int i, int component, float x, float y, float endx, f
   stroke(colorPhaseMap[i], alphaValueMap[component]);
   line(x, y, endx, endy);
   
-  if (pv.mag() > 2.0 && (mode == VIEW_SEPERATE || component == 0)) {
+  if (pv.mag() > VISIBLE_THRESHOLD && (mode == VIEW_SEPERATE || component == 0)) {
     fill(210);
     text(nf(pv.mag(), 1, 1) + " ∠" + nf(degrees(ang), 1, 1) + "°", endx, endy);
   }
@@ -378,9 +379,9 @@ void draw() {
 }
 
 public void setBalanced() {
-      magA = 5.0;
-      magB = 5.0;
-      magC = 5.0;
+      magA = 1.0;
+      magB = 1.0;
+      magC = 1.0;
       phaseA = 0.0;
       phaseB = -120.0;
       phaseC = 120.0;
@@ -397,17 +398,17 @@ void setAction(int setNum) {
       case SET_EXAMPLE:
         // sets phasors to example in Peter Crossley's coursework: 
         // http://www.intranet.eee.manchester.ac.uk/intranet/ug/coursematerial/2nd%20Year/EEEN20028%20-%20Electrical%20Power/Symmetrical%20comp%20introduction_PAC07.pdf
-        magA = 4.0;
-        magB = 3.0;
-        magC = 8.0;
+        magA = 0.8;
+        magB = 0.6;
+        magC = 1.6;
         phaseA = 0.0;
         phaseB = -90.0;
         phaseC = 143.1;
         break;
       case SET_RANDOM:
-        magA = random(0.0, 15.0);
-        magB = random(0.0, 15.0);
-        magC = random(0.0, 15.0);
+        magA = random(0.0, 3.0);
+        magB = random(0.0, 3.0);
+        magC = random(0.0, 3.0);
         phaseA = random(-180.0, 180.0);
         phaseB = random(-180.0, 180.0);
         phaseC = random(-180.0, 180.0);
